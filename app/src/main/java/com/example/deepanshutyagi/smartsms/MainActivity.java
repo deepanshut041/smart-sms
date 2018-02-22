@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private TabLayout mtabLayout;
     private ArrayList<SmsModel> smsModelList;
+    private ArrayList<SmsModel> uniqueSmsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         smsModelList = new ArrayList<>();
+        uniqueSmsList = new ArrayList<>();
 
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -96,24 +98,59 @@ public class MainActivity extends AppCompatActivity {
     public void refreshSmsInbox() {
         ContentResolver contentResolver = getContentResolver();
         Cursor smsInboxCursor = contentResolver.query(Uri.parse("content://sms/inbox"), null, null, null, null);
-//        int indexBody = smsInboxCursor.getColumnIndex("body");
-//        int indexAddress = smsInboxCursor.getColumnIndex("address");
-        String names[] = smsInboxCursor.getColumnNames();
+
+        uniqueSmsList.clear();
         smsModelList.clear();
         if (!smsInboxCursor.moveToFirst()) return;
         do {
             SmsModel smsModel = new SmsModel();
             smsModel.setAddress(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("address")));
             smsModel.setBody(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("body")));
+            smsModel.setServiceCenter(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("service_center")));
+
             smsModel.setDate(Long.parseLong(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("date"))));
             smsModel.setDateSent(Long.parseLong(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("date_sent"))));
-            smsModel.setId(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("_id"))));
-            smsModel.setProtocol(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("protocol"))));
-            smsModel.setRead(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("read"))));
-            smsModel.setSeen(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("seen"))));
-            smsModel.setServiceCenter(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("service_center")));
-            smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("status"))));
+
+            if (smsInboxCursor.getString(smsInboxCursor.getColumnIndex("status")) != null){
+                smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("status"))));
+            }
+            if (smsInboxCursor.getString(smsInboxCursor.getColumnIndex("protocol")) != null){
+                smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("protocol"))));
+            }
+            if (smsInboxCursor.getString(smsInboxCursor.getColumnIndex("read")) != null){
+                smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("read"))));
+            }
+            if (smsInboxCursor.getString(smsInboxCursor.getColumnIndex("seen")) != null){
+                smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("seen"))));
+            }
+            if (smsInboxCursor.getString(smsInboxCursor.getColumnIndex("seen")) != null){
+                smsModel.setStatus(Integer.parseInt(smsInboxCursor.getString(smsInboxCursor.getColumnIndex("_id"))));
+            }
             smsModelList.add(smsModel);
         } while (smsInboxCursor.moveToNext());
+        refreshUniquesSmsInbox();
+    }
+
+    public void refreshUniquesSmsInbox(){
+        for(SmsModel smsModel:smsModelList){
+            int position = 0;
+            boolean isPresent = false;
+            for(SmsModel smsModel1:uniqueSmsList){
+                if((smsModel1.getAddress()).equals(smsModel.getAddress())){
+                   if(smsModel1.getId() < smsModel.getId()){
+                       uniqueSmsList.add(position, smsModel);
+                   }
+                   isPresent = true;
+                }
+                position ++;
+            }
+            if(isPresent == false){
+                uniqueSmsList.add(smsModel);
+            }
+        }
+
+        for (SmsModel smsModel:uniqueSmsList){
+            Log.i("Unique address", smsModel.getAddress());
+        }
     }
 }
