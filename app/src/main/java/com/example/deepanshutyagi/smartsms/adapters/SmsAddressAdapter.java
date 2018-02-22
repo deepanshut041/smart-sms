@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class SmsAddressAdapter extends RecyclerView.Adapter<SmsAddressAdapter.smsListViewHolder> {
     public ArrayList<SmsModel> smsListArrayList;
     public Context context;
-    public String type;
 
     public static class smsListViewHolder extends RecyclerView.ViewHolder {
         ImageView avatar;
@@ -34,10 +33,9 @@ public class SmsAddressAdapter extends RecyclerView.Adapter<SmsAddressAdapter.sm
         }
     }
 
-    public SmsAddressAdapter(ArrayList<SmsModel> arrayList, Context context, String type) {
+    public SmsAddressAdapter(ArrayList<SmsModel> arrayList, Context context) {
         this.smsListArrayList = arrayList;
         this.context = context;
-        this.type = type;
     }
 
     @Override
