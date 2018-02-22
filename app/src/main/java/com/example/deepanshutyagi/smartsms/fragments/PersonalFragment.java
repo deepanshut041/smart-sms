@@ -155,12 +155,14 @@ public class PersonalFragment extends Fragment {
                 uniqueSmsList.add(smsModel);
             }
         }
-        int position = 0;
-        for (SmsModel smsModel:uniqueSmsList){
-            Log.i("Unique address", smsModel.getAddress() + "  " + position);
-            Log.i("length", uniqueSmsList.size() + "");
-            position ++;
-        }
+
+//        This code is only for debugging purpose
+//        int position = 0;
+//        for (SmsModel smsModel:uniqueSmsList){
+//            Log.i("Unique address", smsModel.getAddress() + "  " + position);
+//            Log.i("length", uniqueSmsList.size() + "");
+//            position ++;
+//        }
     }
 
 }
