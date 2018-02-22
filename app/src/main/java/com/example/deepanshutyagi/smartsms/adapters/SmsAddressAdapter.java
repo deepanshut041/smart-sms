@@ -48,7 +48,7 @@ public class SmsAddressAdapter extends RecyclerView.Adapter<SmsAddressAdapter.sm
     public void onBindViewHolder(final smsListViewHolder holder, final int position) {
         final SmsModel smsModel = smsListArrayList.get(position);
         holder.address.setText(smsModel.getAddress());
-        holder.msg.setText((smsModel.getBody()).substring(0, 20) + "...");
+        holder.msg.setText((smsModel.getBody()) + "...");
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -11,6 +11,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.deepanshutyagi.smartsms.R;
+import com.example.deepanshutyagi.smartsms.adapters.SmsAddressAdapter;
 import com.example.deepanshutyagi.smartsms.models.SmsModel;
 
 import java.util.ArrayList;
@@ -26,9 +31,10 @@ import java.util.ArrayList;
  * A simple {@link Fragment} subclass.
  */
 public class PersonalFragment extends Fragment {
-
+    private RecyclerView recyclerView;
     private ArrayList<SmsModel> smsModelList;
     private ArrayList<SmsModel> uniqueSmsList;
+    private SmsAddressAdapter addressAdapter;
     private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
 
     public PersonalFragment() {
@@ -40,6 +46,7 @@ public class PersonalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        View rootView = inflater.inflate(R.layout.fragment_personal, container, false);
         Toast.makeText(getContext(), "Personal Fragment", Toast.LENGTH_SHORT).show();
         smsModelList = new ArrayList<>();
         uniqueSmsList = new ArrayList<>();
@@ -50,7 +57,14 @@ public class PersonalFragment extends Fragment {
         } else {
             refreshSmsInbox();
         }
-        return inflater.inflate(R.layout.fragment_personal, container, false);
+
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.personal_recyclerView);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        addressAdapter = new SmsAddressAdapter(uniqueSmsList, getContext());
+        recyclerView.setAdapter(addressAdapter);
+        return rootView;
     }
 
     public void getPermissionToReadSMS() {
@@ -141,9 +155,11 @@ public class PersonalFragment extends Fragment {
                 uniqueSmsList.add(smsModel);
             }
         }
-
+        int position = 0;
         for (SmsModel smsModel:uniqueSmsList){
-            Log.i("Unique address", smsModel.getAddress());
+            Log.i("Unique address", smsModel.getAddress() + "  " + position);
+            Log.i("length", uniqueSmsList.size() + "");
+            position ++;
         }
     }
 
