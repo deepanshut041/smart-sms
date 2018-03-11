@@ -1,12 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.deepanshutyagi.smartsms.ChatActivity">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/chat_rlayout1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="34dp"
+        android:layout_marginRight="34dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/bg_shapes">
+        <TextView
+            android:id="@+id/bank_name_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
+            android:text="BANK"/>
+
+        <TextView
+            android:id="@+id/income_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bank_name_tv"
+            android:layout_marginTop="6dp"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:drawableLeft="@drawable/ic_up_arrow"
+            android:text="Income\n$1000"/>
+
+        <TextView
+            android:id="@+id/expense_data_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/bank_name_tv"
+            android:layout_marginTop="6dp"
+            android:textSize="13sp"
+            android:textColor="#FFFFFF"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/ic_down_arrow"
+            android:text="Expense\n$500"/>
+
+
+    </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
+        android:id="@+id/chat_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/chat_recyclerView"/>
-</android.support.constraint.ConstraintLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/chat_rlayout1"
+        android:layout_marginTop="10dp"
+        />
+
+</RelativeLayout>

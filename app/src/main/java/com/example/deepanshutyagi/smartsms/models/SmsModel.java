@@ -16,6 +16,9 @@ public class SmsModel {
     private String serviceCenter;
     private int seen;
 
+    private String income_expense_data;
+    private String purpose;
+
     public int getId() {
         return id;
     }
@@ -95,4 +98,21 @@ public class SmsModel {
     public void setSeen(int seen) {
         this.seen = seen;
     }
+
+    public String getIncomeExpenseData(){
+        return income_expense_data;
+    }
+
+    public void setIncomeExpenseData(String income_expense){
+        this.income_expense_data = income_expense;
+    }
+
+    public String getPurpose(){
+        return purpose;
+    }
+
+    public void setPurpose(String purpose){
+        this.purpose = purpose;
+    }
+
 }

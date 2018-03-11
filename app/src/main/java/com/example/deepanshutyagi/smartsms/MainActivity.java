@@ -1,31 +1,19 @@
 package com.example.deepanshutyagi.smartsms;
 
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.pm.PackageManager;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TableLayout;
-import android.widget.Toast;
 
 import com.example.deepanshutyagi.smartsms.adapters.SimpleFragmentPagerAdapter;
-import com.example.deepanshutyagi.smartsms.models.SmsModel;
 
-import java.util.ArrayList;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private ViewPager mViewPager;
     private TabLayout mtabLayout;
+
+    public static int selectedTab = 0;
 
 
     @Override
@@ -37,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.main_viewPager);
 
         // Create an adapter that knows which fragment should be shown on each page
-        SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(this, getSupportFragmentManager());
+        final SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(this, getSupportFragmentManager());
 
         // Set the adapter onto the view pager
         mViewPager.setAdapter(adapter);
@@ -45,6 +33,25 @@ public class MainActivity extends AppCompatActivity {
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tabLayout);
         tabLayout.setupWithViewPager(mViewPager);
+
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                selectedTab = tab.getPosition();
+                if(selectedTab == 1){
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 }

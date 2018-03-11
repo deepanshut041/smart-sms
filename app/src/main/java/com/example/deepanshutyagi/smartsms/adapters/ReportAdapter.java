@@ -16,39 +16,37 @@ import java.util.ArrayList;
  * Created by Deepanshu Tyagi on 2/22/2018.
  */
 
-public class ChatAddressAdapter extends RecyclerView.Adapter<ChatAddressAdapter.chatListViewHolder> {
-    public ArrayList<SmsModel> chatListArrayList;
+public class ReportAdapter extends RecyclerView.Adapter<ReportAdapter.chatListViewHolder> {
+    public ArrayList<SmsModel> chatListArrayList2;
     public Context context;
 
     public static class chatListViewHolder extends RecyclerView.ViewHolder {
-        TextView date;
-        TextView body_send, body_receive;
+        TextView income_expense_data, purpose;
         public chatListViewHolder(View itemView) {
             super(itemView);
-            date = (TextView) itemView.findViewById(R.id.chat_recyclerView_time);
-            body_send = (TextView) itemView.findViewById(R.id.chat_recyclerView_body_send);
-            body_receive = (TextView) itemView.findViewById(R.id.chat_recyclerView_body_receive);
+            income_expense_data = (TextView) itemView.findViewById(R.id.income_expense_data);
+            purpose = (TextView) itemView.findViewById(R.id.purpose);
         }
     }
 
-    public ChatAddressAdapter(ArrayList<SmsModel> arrayList, Context context) {
-        this.chatListArrayList = arrayList;
+    public ReportAdapter(ArrayList<SmsModel> arrayList, Context context) {
+        this.chatListArrayList2 = arrayList;
         this.context = context;
     }
 
     @Override
     public chatListViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_recyclerview_item, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.report_rv_item, parent, false);
         return new chatListViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(final chatListViewHolder holder, final int position) {
-        final SmsModel chatModel = chatListArrayList.get(position);
-        String value = new java.text.SimpleDateFormat("dd/MM/yyyy HH:mm:ss").
-                format(new java.util.Date(chatModel.getDate()));
-        holder.date.setText(value);
-        holder.body_send.setText(chatModel.getBody());
+        final SmsModel chatModel = chatListArrayList2.get(position);
+
+        holder.income_expense_data.setText(chatModel.getIncomeExpenseData());
+        holder.purpose.setText(chatModel.getPurpose());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,6 +58,6 @@ public class ChatAddressAdapter extends RecyclerView.Adapter<ChatAddressAdapter.
 
     @Override
     public int getItemCount() {
-        return chatListArrayList.size();
+        return chatListArrayList2.size();
     }
 }

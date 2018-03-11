@@ -23,13 +23,13 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         mContext = context;
     }
 
-
     // This determines the fragment for each tab
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
             return new PersonalFragment();
-        } else{
+        }
+        else{
             return new TransactionalFragment();
         }
     }
@@ -46,7 +46,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
         // Generate title based on item position
         switch (position) {
             case 0:
-                return mContext.getString(R.string.personal);
+                return mContext.getString(R.string.all);
             case 1:
                 return mContext.getString(R.string.transactional);
             default:

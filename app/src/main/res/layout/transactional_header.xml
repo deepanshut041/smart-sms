@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/transactional_header_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:text="Hello World"
+        android:padding="15dp"
+        android:background="#4c4c4c"
+        android:textColor="#fff"
+        android:textSize="18sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        />
+    <com.yarolegovich.discretescrollview.DiscreteScrollView
+        android:id="@+id/transactional_header_discretescrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/transactional_header_header"
+        app:layout_constraintRight_toRightOf="@id/transactional_header_header"
+        app:layout_constraintLeft_toLeftOf="@id/transactional_header_header"
+
+        />
+
+</android.support.constraint.ConstraintLayout>

@@ -12,10 +12,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +45,6 @@ public class PersonalFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_personal, container, false);
-        Toast.makeText(getContext(), "Personal Fragment", Toast.LENGTH_SHORT).show();
         smsModelList = new ArrayList<>();
         uniqueSmsList = new ArrayList<>();
 
@@ -155,14 +152,105 @@ public class PersonalFragment extends Fragment {
                 uniqueSmsList.add(smsModel);
             }
         }
-
-//        This code is only for debugging purpose
-//        int position = 0;
-//        for (SmsModel smsModel:uniqueSmsList){
-//            Log.i("Unique address", smsModel.getAddress() + "  " + position);
-//            Log.i("length", uniqueSmsList.size() + "");
-//            position ++;
-//        }
     }
+
+    /*
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.ctx_mark:
+                int mpos = addressAdapter.getPosition();
+
+                SharedPreferences prefs = getActivity().getSharedPreferences("AppPref", MODE_PRIVATE);
+                String previousAddr = prefs.getString("maddr", null);
+                if (previousAddr != null) {
+                    if(previousAddr.length()>0){
+                        String[] addrList = previousAddr.split(",");
+
+                        if(Arrays.asList(addrList).contains(uniqueSmsList.get(mpos).getAddress().toString())){
+                            //already marked
+                            Toast.makeText(getContext(), "Already Marked", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            String newAddr = previousAddr+","+uniqueSmsList.get(mpos).getAddress().toString();
+                            SharedPreferences.Editor editor = prefs.edit();
+                            editor.putString("maddr", newAddr);
+                            editor.apply();
+                            Toast.makeText(getContext(), "Marked", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{
+                        //no data
+                        String newAddr = uniqueSmsList.get(mpos).getAddress().toString();
+                        SharedPreferences.Editor editor = prefs.edit();
+                        editor.putString("maddr", newAddr);
+                        editor.apply();
+                        Toast.makeText(getContext(), "Marked", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    //fresh data
+                    String newAddr = uniqueSmsList.get(mpos).getAddress().toString();
+                    SharedPreferences.Editor editor = prefs.edit();
+                    editor.putString("maddr", newAddr);
+                    editor.apply();
+                    Toast.makeText(getContext(), "Marked", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.ctx_unmark:
+
+                int mpos2 = addressAdapter.getPosition();
+
+                SharedPreferences prefs2 = getActivity().getSharedPreferences("AppPref", MODE_PRIVATE);
+                String previousAddr2 = prefs2.getString("maddr", null);
+
+                if (previousAddr2 != null) {
+                    if(previousAddr2.length()>0 && previousAddr2.contains(",")){
+                        String[] addrList = previousAddr2.split(",");
+
+                        if(Arrays.asList(addrList).contains(uniqueSmsList.get(mpos2).getAddress().toString())){
+                            //remove it
+                            List<String> list = new ArrayList<String>(Arrays.asList(addrList));
+                            list.remove(uniqueSmsList.get(mpos2).getAddress().toString());
+                            addrList = list.toArray(new String[0]);
+                            StringBuilder sb = new StringBuilder();
+                            for (int i = 0; i < addrList.length; i++) {
+                                sb.append(addrList[i]).append(",");
+                            }
+
+                            SharedPreferences.Editor editor = prefs2.edit();
+                            editor.putString("maddr", sb.substring(0,sb.length()-1).toString());
+                            editor.apply();
+                            Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            //already unmarked
+                            Toast.makeText(getContext(), "Already Unmarked", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else if(previousAddr2.length()>0){
+                        //only one address
+                        String newAddr2 = "";
+                        SharedPreferences.Editor editor = prefs2.edit();
+                        editor.putString("maddr", newAddr2);
+                        editor.apply();
+                        Toast.makeText(getContext(), "Done", Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(getContext(), "Already Unmarked", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getContext(), "Already Unmarked", Toast.LENGTH_SHORT).show();
+                }
+
+                break;
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    */
+
 
 }

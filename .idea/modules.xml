@@ -4,6 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/SmartSms.iml" filepath="$PROJECT_DIR$/SmartSms.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/smart-sms.iml" filepath="$PROJECT_DIR$/.idea/smart-sms.iml" />
     </modules>
   </component>
 </project>
