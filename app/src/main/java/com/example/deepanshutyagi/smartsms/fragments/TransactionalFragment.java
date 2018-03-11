@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import com.example.deepanshutyagi.smartsms.R;
 import com.example.deepanshutyagi.smartsms.adapters.SmsAddressAdapter;
+import com.example.deepanshutyagi.smartsms.adapters.TransactionalAdapter;
 import com.example.deepanshutyagi.smartsms.models.SmsModel;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
 
@@ -30,10 +32,10 @@ import java.util.ArrayList;
  */
 public class TransactionalFragment extends Fragment {
 
-    private RecyclerView recyclerView;
+    private DiscreteScrollView discreteScrollView;
     private ArrayList<SmsModel> smsModelList;
     private ArrayList<SmsModel> uniqueSmsList;
-    private SmsAddressAdapter addressAdapter;
+    private TransactionalAdapter transactionalAdapter;
     private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
 
     public TransactionalFragment() {
@@ -56,12 +58,10 @@ public class TransactionalFragment extends Fragment {
             refreshSmsInbox();
         }
 
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.transactional_recyclerView);
-        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        addressAdapter = new SmsAddressAdapter(uniqueSmsList, getContext());
-        recyclerView.setAdapter(addressAdapter);
+//        These are for DiscreteScrollView
+        discreteScrollView = (DiscreteScrollView) rootView.findViewById(R.id.transactional_discretescrollview);
+        transactionalAdapter = new TransactionalAdapter(uniqueSmsList, getContext());
+        discreteScrollView.setAdapter(transactionalAdapter);
 
         return rootView;
     }
