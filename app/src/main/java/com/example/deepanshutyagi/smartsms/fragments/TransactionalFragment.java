@@ -37,6 +37,7 @@ public class TransactionalFragment extends Fragment {
     private ArrayList<SmsModel> uniqueSmsList;
     private TransactionalAdapter transactionalAdapter;
     private static final int READ_SMS_PERMISSIONS_REQUEST = 1;
+    private RecyclerView recyclerView;
 
     public TransactionalFragment() {
         // Required empty public constructor
@@ -59,9 +60,13 @@ public class TransactionalFragment extends Fragment {
         }
 
 //        These are for DiscreteScrollView
-        discreteScrollView = (DiscreteScrollView) rootView.findViewById(R.id.transactional_discretescrollview);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.transactional_recyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
         transactionalAdapter = new TransactionalAdapter(uniqueSmsList, getContext());
-        discreteScrollView.setAdapter(transactionalAdapter);
+        recyclerView.setAdapter(transactionalAdapter);
+
 
         return rootView;
     }

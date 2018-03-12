@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -37,11 +39,11 @@ public class TransactionalAdapter extends RecyclerView.Adapter<TransactionalAdap
 
     public static class transactionalListViewHolder extends RecyclerView.ViewHolder {
         TextView address, data, purpose;
-        DiscreteScrollView discreteScrollView;
+        RecyclerView recyclerView;
         public transactionalListViewHolder(View itemView) {
             super(itemView);
             address = (TextView) itemView.findViewById(R.id.transactional_header_header);
-            discreteScrollView = (DiscreteScrollView ) itemView.findViewById(R.id.transactional_header_discretescrollview);
+            recyclerView = (RecyclerView) itemView.findViewById(R.id.transactional_header_recyclerView);
             purpose = (TextView) itemView.findViewById(R.id.transactional_header_purpose);
             data = (TextView) itemView.findViewById(R.id.transactional_header_expense_data);
 
@@ -64,15 +66,35 @@ public class TransactionalAdapter extends RecyclerView.Adapter<TransactionalAdap
     @Override
     public void onBindViewHolder(final transactionalListViewHolder holder, final int position) {
         final SmsModel smsModel = transactionalArrayList.get(position);
-        ArrayList <SmsModel> chatList = getAllSms(smsModel.getAddress());
+        final ArrayList <SmsModel> chatList = getAllSms(smsModel.getAddress());
         TransactionalItemAdapter transactionalItemAdapter = new TransactionalItemAdapter(chatList, holder.itemView.getContext());
-        holder.discreteScrollView.setAdapter(transactionalItemAdapter);
-        int current_pos = holder.discreteScrollView.getCurrentItem();
-        if(current_pos >= 0 ) {
-            SmsModel currentItem = chatList.get(current_pos);
-            holder.data.setText(currentItem.getIncomeExpenseData());
-            holder.purpose.setText(currentItem.getBody());
+        final LinearLayoutManager linearLayoutManager = new LinearLayoutManager(holder.itemView.getContext(), LinearLayoutManager.VERTICAL, false);
+        holder.recyclerView.setLayoutManager(linearLayoutManager);
+        holder.recyclerView.setItemAnimator(new DefaultItemAnimator());
+        holder.recyclerView.setAdapter(transactionalItemAdapter);
+        holder.recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    //Dragging
+                } else if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                   int  current_pos = linearLayoutManager.findFirstVisibleItemPosition();
+                        SmsModel currentItem = chatList.get(current_pos);
+                        holder.data.setText(currentItem.getIncomeExpenseData());
+                        holder.purpose.setText(currentItem.getBody());
+                }
+            }
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            int firstVisibleItem = linearLayoutManager.findFirstVisibleItemPosition();
+               /* Log.e ("VisibleItem", String.valueOf(firstVisibleItem));*/
+
         }
+    });
         holder.address.setText(smsModel.getAddress());
     }
 
